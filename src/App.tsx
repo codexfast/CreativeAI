@@ -1,10 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import Layout from './components/Layout';
+import Home from './pages/Home';
 
-function Home() {
-  return <h1>Página Inicial</h1>;
-}
 
 function App() {
   return (
