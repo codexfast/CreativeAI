@@ -17,7 +17,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-10 border-b shadow-2xs">
+    <header className="sticky top-0 z-10 border-b shadow-2xs bg-background">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto">
         <h1 className="text-xl font-bold">creative.ai</h1>
         <div className="flex items-center justify-center gap-2">

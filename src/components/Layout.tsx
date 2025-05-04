@@ -6,7 +6,7 @@ export default function Layout() {
   return (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-1 container flex justify-center items-center mx-auto py-5">
+        <main className="flex-1 container justify-center mx-auto py-5 px-2">
           <Outlet />
         </main>
         <Footer />

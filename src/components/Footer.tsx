@@ -1,5 +1,5 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Home, GalleryHorizontal, Activity } from "lucide-react";
+import { Home, GalleryHorizontal, Activity, PencilRuler } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -18,8 +18,8 @@ export default function Footer() {
               value="home"
               className="flex flex-col items-center justify-center"
             >
-              <Home className="h-5 w-5" />
-              <span className="text-xs mt-1">Início</span>
+              <PencilRuler className="h-5 w-5" />
+              <span className="text-xs mt-1">Criar</span>
             </TabsTrigger>
             <TabsTrigger
               value="activity"

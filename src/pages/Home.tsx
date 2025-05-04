@@ -1,72 +1,82 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
-import { GalleryHorizontal, GalleryVertical } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Textarea } from "@/components/ui/textarea";
 
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Home() {
   return (
-    <Card className="w-full max-w-2xl mx-4 md:mx-0">
-      <CardHeader>
+    <Card className="w-full lg:p-6 sm:p-3">
+      {/* <CardHeader>
         <h2 className="text-2xl font-bold text-center">Crie Imagens</h2>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Prompt Input */}
-        <div className="space-y-2">
-          <Label htmlFor="prompt" className="text-base">
-            Prompt
-          </Label>
-          <Textarea
-            id="prompt"
-            placeholder="Descreva a imagem que quer gerar..."
-            className="h-44 py-2 resize-none"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-muted-foreground">
-            Orientação
-          </label>
-          <ToggleGroup
-            type="single"
-            defaultValue="portrait"
-            className="border rounded-md overflow-hidden"
-          >
-            <ToggleGroupItem
-              value="portrait"
-              aria-label="Modo retrato"
-              className="px-4 py-2"
-              size={"sm"}
-            >
-              <GalleryHorizontal className="w-4 h-4 mr-2" />
-              Retrato
-            </ToggleGroupItem>
-
-            <ToggleGroupItem
-              value="landscape"
-              aria-label="Modo horizontal"
-              className="px-4 py-2 border-l"
-              size={"sm"}
-            >
-              <GalleryVertical className="w-4 h-4 mr-2" />
-              Horizontal
-            </ToggleGroupItem>
-          </ToggleGroup>
-        </div>
+      </CardHeader> */}
+      <CardContent className="lg:px-0">
+        <Textarea
+          id="prompt"
+          placeholder="Descreva a imagem que quer gerar..."
+          className="h-80 py-2 resize-none"
+        />
       </CardContent>
-      <CardFooter>
-        <Button className="w-full" size="lg" disabled>
-          {/* <Loader2 className="animate-spin" /> */}
-          Gerar Imagens
+      <CardFooter className="lg:px-0 flex flex-col justify-end gap-3">
+        <div className="flex flex-1 gap-2 justify-center sm:justify-end items-center relative w-full">
+
+          <Select>
+            <SelectTrigger size="sm">
+              <SelectValue placeholder="Qual.."/>
+            </SelectTrigger>
+            <SelectContent side="top">
+              <SelectGroup>
+                <SelectLabel>Selecione a qualidade</SelectLabel>
+                <SelectItem value="sm">Baixa</SelectItem>
+                <SelectItem value="md">Média</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger size="sm">
+              <SelectValue placeholder="Orien.." />
+            </SelectTrigger>
+            <SelectContent side="top">
+              <SelectGroup>
+                <SelectLabel>Selecione a orientação</SelectLabel>
+                <SelectItem value="portrait">Retrato</SelectItem>
+                <SelectItem value="horizontal">Horizontal</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
+          <Select>
+            <SelectTrigger size="sm">
+              <SelectValue placeholder="Qtd." />
+            </SelectTrigger>
+            <SelectContent side="top">
+              <SelectGroup>
+                <SelectLabel>Selecione a quantidade</SelectLabel>
+                <SelectItem value="1">1</SelectItem>
+                <SelectItem value="2">2</SelectItem>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Button size={"icon"} className="rounded-2xl cursor-pointer hidden sm:flex">
+            <ArrowRight className="h-5 w-5" />
+          </Button>
+        </div>
+        <Button size={"icon"} className="rounded-2xl cursor-pointer sm:hidden w-full">
+            <ArrowRight className="h-5 w-5" />
         </Button>
       </CardFooter>
     </Card>
