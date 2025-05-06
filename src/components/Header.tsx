@@ -27,7 +27,7 @@ export default function Header() {
             <span className="sr-only">Toggle theme</span>
           </Button>
           <Avatar>
-            <AvatarImage src="https://i.pravatar.cc/100" alt="User" />
+            <AvatarImage src="https://ui-avatars.com/api/?background=0a0a0a&color=fff&name=Gil" alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </div>

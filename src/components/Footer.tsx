@@ -1,35 +1,43 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Home, GalleryHorizontal, Activity, PencilRuler } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { GalleryHorizontal, Activity, PencilRuler } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="sticky bottom-5 z-10">
-      <div className="container px-4 mx-auto">
-        <Tabs defaultValue="home" className="w-full">
-          <TabsList className="w-full h-16 grid grid-cols-3">
-            <TabsTrigger
-              value="gallery"
-              className="flex flex-col items-center justify-center"
-            >
+    <footer className="sticky bottom-5 z-10 mx-3">
+      <div className="container px-3 py-1 mx-auto bg-background shadow-sm rounded-2xl">
+        <div className="w-full gap-2 grid grid-cols-3">
+          <Button
+            className="flex flex-col items-center justify-center h-15 cursor-pointer"
+            variant={"ghost"}
+            asChild
+          >
+            <Link to="/gallery">
               <GalleryHorizontal className="h-5 w-5" />
               <span className="text-xs mt-1">Galeria</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="home"
-              className="flex flex-col items-center justify-center"
-            >
+            </Link>
+          </Button>
+          <Button
+            className="flex flex-col items-center justify-center h-15 cursor-pointer"
+            variant={"ghost"}
+            asChild
+          >
+            <Link to="/create">
               <PencilRuler className="h-5 w-5" />
               <span className="text-xs mt-1">Criar</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="activity"
-              className="flex flex-col items-center justify-center"
-            >
+            </Link>
+          </Button>
+          <Button
+            className="flex flex-col items-center justify-center h-15 cursor-pointer"
+            variant={"ghost"}
+            asChild
+          >
+            <Link to="/activity">
               <Activity className="h-5 w-5" />
               <span className="text-xs mt-1">Atividade</span>
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </Link>
+          </Button>
+        </div>
       </div>
     </footer>
   );
