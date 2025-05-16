@@ -19,42 +19,55 @@ import {
 import React from "react";
 import { useLocalStorage } from "@/components/localstorage-provider";
 
+import { useMutation } from "@tanstack/react-query";
+import { createTask } from "@/api/creative";
+
 interface Options {
-  quality: string;
-  orientation: string;
+  quality: "sm" | "md";
+  orientation: "portrait" | "landscape";
   quantity: number;
 }
 
-type ContentPrompt = String
+type ContentPrompt = string;
 
 export default function Home() {
   const { data, setData } = useLocalStorage();
-  const [options, setOptions] = React.useState <Options> (data)
+  const [options, setOptions] = React.useState<Options>({
+    quality: data.quality as "sm" | "md",
+    orientation: data.orientation as "portrait" | "landscape",
+    quantity: data.quantity
+  });
 
   const [prompt, setPrompt] = React.useState <ContentPrompt>("")
   const [loading, setLoading] = React.useState(false)
 
+  const { mutate } = useMutation({
+    mutationFn: createTask,
+    onSuccess: (_) => {
+      toast.info("Adicionado a fila, isto pode demorar um pouco.")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    }, onSettled: () => {
+      setLoading(false)
+    }
+  })
   
 
   const createActivity = () => {
     if (prompt) {
+      setLoading(true)
       setData({
         quality: options.quality,
         orientation: options.orientation,
         quantity: options.quantity,
       })
-      setLoading(true)
-      // fetch("/api/createActivity", {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     prompt,
-      //     options
-      //   })
-      // })
+      
 
-      toast.info("Adicionado a fila, isto pode demorar um pouco.")
-
-      setLoading(false)
+      mutate({
+        prompt,
+        ...options
+      })
     }
   }
 
@@ -79,7 +92,7 @@ export default function Home() {
           <Select onValueChange={(value) => {
             setOptions({
               ...options,
-              quality: value
+              quality: value as "sm" | "md"
             })
           }} defaultValue={options.quality}>
             <SelectTrigger size="sm">
@@ -97,7 +110,7 @@ export default function Home() {
           <Select onValueChange={(value) => {
             setOptions({
               ...options,
-              orientation: value
+              orientation: value as "portrait" | "landscape"
             })
           }} defaultValue={options.orientation}>
             <SelectTrigger size="sm">
@@ -107,7 +120,7 @@ export default function Home() {
               <SelectGroup>
                 <SelectLabel>Selecione a orientação</SelectLabel>
                 <SelectItem value="portrait">Retrato</SelectItem>
-                <SelectItem value="horizontal">Horizontal</SelectItem>
+                <SelectItem value="landscape">Horizontal</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

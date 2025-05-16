@@ -1,46 +1,39 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import {useState, useEffect} from "react"
+import { API_URL, GALLERY_URL } from ".";
 
-const API_URL = "http://192.168.100.205:8000/api";
-
-export interface GenerateImageRequest {
-  prompt: string;
-  quality?: "sm" | "md";
-  orientation?: "portrait" | "landscape";
-  quantity?: number;
-}
-
-export interface TaskStatus {
-  status: string;
+export interface TaskItem {
+  task_id: string;
+  status: "pending" | "processing" | "done" | "failed";
   quantity: number;
   tags: string[];
-  results?: string[];
-}
-
-export interface TaskItem extends TaskStatus {
-  task_id: string;
   prompt: string;
+  results: string[];
 }
 
-// Função para criar uma tarefa
-export const generateImage = async (data: GenerateImageRequest) => {
-  const res = await fetch(`${API_URL}/generate`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+export interface GalleryItem {
+  results: string[];
+}
 
-  if (!res.ok) {
-    throw new Error("Erro ao criar tarefa");
-  }
+type TaskList = TaskItem[];
 
-  return res.json();
-};
+interface FetchTaskParams {
+  task_id?: string;
+}
 
-// Verifica o status de uma tarefa
-export const fetchTask = async ({task_id}:{task_id?: string}): Promise<TaskStatus> => {
+interface CreateTaskParams {
+  prompt: string;
+  quantity: number;
+  quality: "sm" | "md";
+  orientation: "portrait" | "landscape";
+}
+
+interface CreateTaskResponse {
+  msg: string;
+  task_id: string;
+}
+
+export const fetchTask = async ({
+  task_id,
+}: FetchTaskParams): Promise<TaskItem> => {
   const res = await fetch(`${API_URL}/task/${task_id}`);
   if (!res.ok) {
     throw new Error("Tarefa não encontrada");
@@ -52,8 +45,40 @@ export const fetchAllTasks = async ({
   pageParam = 1,
 }: {
   pageParam?: number;
-}): Promise<TaskItem[]> => {
+}): Promise<TaskList> => {
   const res = await fetch(`${API_URL}/tasks?page=${pageParam}`);
+  if (!res.ok) {
+    throw new Error("Erro ao buscar tarefas");
+  }
+  return res.json();
+};
+
+export const fetchGallery = async (): Promise<GalleryItem> => {
+  const res = await fetch(GALLERY_URL);
+  if (!res.ok) {
+    throw new Error("Erro ao buscar tarefas");
+  }
+  return res.json();
+};
+
+export const createTask = async ({
+  prompt,
+  quantity,
+  quality,
+  orientation,
+}: CreateTaskParams): Promise<CreateTaskResponse> => {
+  const res = await fetch(`${API_URL}/generate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      prompt,
+      quantity,
+      quality,
+      orientation,
+    }),
+  });
   if (!res.ok) {
     throw new Error("Erro ao buscar tarefas");
   }
